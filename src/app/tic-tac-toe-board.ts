@@ -4,8 +4,9 @@ export class TicTacToeBoard {
     public cells = [["-", "-", "-"], ["-", "-", "-"], ["-", "-", "-"]],
     public turnsTaken = 0,
     public whoseTurn = 'X',
-    public winner = false;
-    public winningPlayer = '';
+    public winner = false,
+    public winningPlayer = '',
+    public moveLog = []
   ) {}
 
     setTurn(player) {
@@ -13,11 +14,11 @@ export class TicTacToeBoard {
     }
 
     getTurn() {
-      return whoseTurn;
+      return this.whoseTurn;
     }
 
     getBoard() {
-      return cells;
+      return this.cells;
     }
 
     setCell(x, y, player) {
@@ -30,9 +31,10 @@ export class TicTacToeBoard {
 
     takeTurn(x, y) {
       console.log(`${x} , ${y}`);
-      if(this.cells[x][y] === '-' && !this.winner){
+      if (this.cells[x][y] === '-' && !this.winner) {
         this.cells[x][y] = this.whoseTurn;
-        if(this.turnsTaken >= 4) this.checkWinner(x, y);
+        if (this.turnsTaken >= 4) this.checkWinner(x, y);
+        this.logMove(x, y);
         this.switchTurn();
         console.log(this.cells);
       }
@@ -45,10 +47,10 @@ export class TicTacToeBoard {
 
     checkWinner(x, y) {
       this.winner = this.checkColumn(y) || this.checkRow(x);
-      if((x+y) % 2 === 0 && !this.winner) {
-        if(x === y) {
+      if ((x + y) % 2 === 0 && !this.winner) {
+        if (x === y) {
           this.winner = this.checkDownDiag();
-        } else if(x + y === 2) {
+        } else if (x + y === 2) {
           this.winner = this.checkUpDiag();
         }
       }
@@ -58,16 +60,34 @@ export class TicTacToeBoard {
       return this.winner;
     }
 
-    checkColumn(x) {
-      return this.cells.map(y => y[x]).every((val, i, arr) => val === arr[0]);
+    logMove(x, y) {
+      this.moveLog.push({
+        'x': x,
+        'y': y,
+        'player': this.whoseTurn
+      });
+      console.log(this.moveLog);
     }
-    checkRow(y) {
-      console.log(this.cells[y].every((val, i, arr) => val === arr[0]));
-      return this.cells[y].every((val, i, arr) => val === arr[0]);
+
+    undo() {
+      const move = this.moveLog.pop();
+      this.cells[move.x][move.y] = "-";
+      this.whoseTurn = move.player === 'X' ? 'X' : 'O';
+      this.turnsTaken--;
     }
+
     checkDownDiag() {
       return this.cells[0][0] === this.cells[1][1] && this.cells [1][1] === this.cells[2][2];
     }
+
+    checkColumn(x) {
+      return this.cells.map(y => y[x]).every((val, i, arr) => val === arr[0]);
+    }
+
+    checkRow(y) {
+      return this.cells[y].every((val, i, arr) => val === arr[0]);
+    }
+
     checkUpDiag() {
       return this.cells[0][2] === this.cells[1][1] && this.cells [1][1] === this.cells[2][0];
     }

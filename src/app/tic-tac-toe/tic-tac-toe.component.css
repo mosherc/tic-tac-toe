@@ -1,7 +1,13 @@
+.game-panel {
+  height: 75%;
+  margin: 50px auto 25px auto;
+  text-align: center;
+}
+
 .game-board {
-  width: 50%;
+  width: 70%;
   height: 500px;
-  margin: 50px auto 50px auto;
+  margin: 50px auto 25px auto;
   text-align: center;
 }
 
