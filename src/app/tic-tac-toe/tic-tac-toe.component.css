@@ -1,0 +1,16 @@
+.game-board {
+  width: 50%;
+  height: 500px;
+  margin: 50px auto 50px auto;
+  text-align: center;
+}
+
+.game-cell {
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  height: 33%;
+  width: 33%;
+  font-size: 50px;
+  border-width: medium;
+}

@@ -1,0 +1,20 @@
+<div class="container">
+  <table class="table table-bordered game-board">
+    <tbody>
+    <tr *ngFor="let column of board.cells; let x = index">
+      <td *ngFor="let cell of column; let y = index" (click)="board.takeTurn(x,y)" class="game-cell text-center">
+          <i [ngClass]="{'fas fa-times': board.getCell(x, y)==='X', 'far fa-circle': board.getCell(x, y)==='O'}"></i>
+      </td>
+    </tr>
+  </tbody>
+  </table>
+  <div class="text-center">
+    <button class="btn btn-primary" (click)="newGame()" [ngClass]="{'disabled': turnsTaken === 0}">New Game</button>
+    <div *ngIf="board.winner" class="">
+      <div class="card card-body mt-5">
+        Congrats to Player {{board.winningPlayer}} on winning!
+      </div>
+    </div>
+  </div>
+
+</div>
