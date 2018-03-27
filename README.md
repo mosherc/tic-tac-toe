@@ -1,6 +1,6 @@
 # TicTacToe
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.7.3.
+Tic Tac Toe coded with Angular 5. [Demo](https://mosherc.github.io/tic-tac-toe)
 
 ## Development server
 
