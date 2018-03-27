@@ -1,6 +1,6 @@
 # Tic Tac Toe
 
-This is the game of Tic Tac Toe coded with Angular 5 ([Demo](https://mosherc.github.io/tic-tac-toe)). It's essentially an object with a 3x3 2D array data structure with all the rules implemented as turn methods. The game will track the moves in the move log on the left, and it checks for a winner after each turn after the first four. It uses the move log to undo moves if you happened to make a mistake and press the undo button. 
+This is the game of Tic Tac Toe coded with Angular 5 ([Demo](https://mosherc.github.io/tic-tac-toe)). It's essentially an object with a 3x3 2D array data structure with all the rules implemented as turn methods. The game will track the moves in the move log on the left, and it checks for a winner after each turn after the first four. It uses the move log to undo moves if you happened to make a mistake, just press the undo button! No one is watching...
 
 ## How to run locally
 
