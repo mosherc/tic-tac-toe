@@ -20,7 +20,7 @@ import { TicTacToeComponent } from './tic-tac-toe/tic-tac-toe.component';
     BrowserAnimationsModule,
     RouterModule.forRoot([
             { path: 'welcome', component: WelcomeComponent },
-            { path: 'tictactoe', component: TicTacToeComponent },
+            { path: 'play', component: TicTacToeComponent },
             { path: '', redirectTo: 'welcome', pathMatch: 'full' },
             { path: '**', redirectTo: 'welcome', pathMatch: 'full' }
         ]),
