@@ -38,6 +38,9 @@ export class TicTacToeBoard {
         this.switchTurn();
         console.log(this.cells);
       }
+      else {
+        new Audio('../assets/sounds/Basso.mp3').play();
+      }
     }
 
     switchTurn() {
