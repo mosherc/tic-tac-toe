@@ -39,7 +39,7 @@ export class TicTacToeBoard {
         console.log(this.cells);
       }
       else {
-        new Audio('../assets/sounds/Basso.mp3').play();
+        new Audio('/assets/sounds/Basso.mp3').play();
       }
     }
 
