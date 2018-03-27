@@ -1,28 +1,38 @@
-<div class="container">
+<div class="container px-5">
   <div class="row">
-    <div class="col-3 text-center">
-      <div class="game-panel card">
-        <div class="mt-3 mx-3">
-          Click a square to start playing, X goes first!
+    <div class="col-4 text-center">
+      <div class="game-panel card text-center flex-column align-items-start">
+        <div class="mb-auto mx-auto">
+          <div class="mt-3 mx-3">
+            Click a square to start playing, X goes first!
+          </div>
+          <div class="card move-log m-3 py-1" *ngIf="board.moveLog.length">
+            <div *ngFor="let move of board.moveLog">{{move.x}}, {{move.y}} by player {{move.player}}</div>
+          </div>
         </div>
-        <div *ngIf="board.winner" class="">
-          <div class="card card-body mt-3 mx-3">
+        <div *ngIf="board.winner" class="text-center w-100 px-3">
+          <div class="card card-body mt-3">
             Congrats to Player {{board.winningPlayer}} on winning!
           </div>
         </div>
-        <div class="card m-3 py-1" *ngIf="board.moveLog.length">
-          <div *ngFor="let move of board.moveLog">{{move.x}}, {{move.y}} by player {{move.player}}</div>
+        <div *ngIf="board.moveLog.length === 9 && !board.winner" class="text-center w-100 px-3">
+            <div class="card card-body mt-3">
+             No one won! Would you like to play again?
+            </div>
+          </div>
+        <div class="text-center mx-auto my-3">
+          <div class="btn-group">
+            <button class="btn btn-outline-primary" (click)="board.undo()" [ngClass]="{'disabled': board.turnsTaken === 0 || board.winner}"
+              [disabled]="board.turnsTaken === 0 || board.winner">
+              <i class="fas fa-undo"></i> Undo
+            </button>
+            <button class="btn btn-outline-primary" (click)="newGame()" [ngClass]="{'disabled': board.turnsTaken === 0}">New Game</button>
+          </div>
         </div>
       </div>
-      <div class="btn-group">
-          <button class="btn btn-outline-primary" (click)="board.undo()" [ngClass]="{'disabled': board.turnsTaken === 0 || board.winner}" [disabled]="board.turnsTaken === 0 || board.winner">
-            <i class="fas fa-undo"></i> Undo
-          </button>
-          <button class="btn btn-outline-primary" (click)="newGame()" [ngClass]="{'disabled': board.turnsTaken === 0}">New Game</button>
-        </div>
     </div>
-    <div class="col-9">
-      <table class="table table-bordered game-board">
+    <div class="col-8">
+      <table class="table game-board">
         <tbody>
           <tr *ngFor="let column of board.cells; let x = index">
             <td *ngFor="let cell of column; let y = index" (click)="board.takeTurn(x,y)" class="game-cell text-center">

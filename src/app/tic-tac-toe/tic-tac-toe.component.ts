@@ -9,7 +9,7 @@ import { TicTacToeBoard } from '../tic-tac-toe-board';
 export class TicTacToeComponent implements OnInit {
 
   board: TicTacToeBoard = new TicTacToeBoard();
-  console.log(this.board);
+  //console.log(this.board);
 
   constructor() { }
 
