@@ -25,7 +25,7 @@
   }
 
   .game-panel {
-    height: 380px !important;
+    height: auto !important;
   }
 }
 
