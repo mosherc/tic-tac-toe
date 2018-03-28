@@ -57,6 +57,48 @@ tr:last-child .game-cell {
   background-color: #eee;
 }
 
+.checkbox-input{
+	height: 0;
+	width: 0;
+  visibility: hidden;
+  
+  &:checked + .checkbox-label {
+    background: #28a745;
+
+    &:after {
+      left: calc(100% - 3px);
+      transform: translateX(-100%);
+    }
+  }
+}
+
+.checkbox-label {
+	cursor: pointer;
+	width: 50px;
+	height: 25px;
+	background: #007bff;
+	display: block;
+	border-radius: .25rem;
+	position: relative;
+  transition: all 0.3s ease;
+  
+  &:after {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 18px;
+    height: 19px;
+    background: #fff;
+    border-radius: .25rem;
+    transition: all 0.3s ease;
+  }
+
+  &:active:after {
+    width: 25px;
+  }
+}
+
 /* @media only screen and (max-width: 812px){
   .move-log {
     max-height: 200px;

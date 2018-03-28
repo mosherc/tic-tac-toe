@@ -17,6 +17,10 @@ export class TicTacToeBoard {
       return this.whoseTurn;
     }
 
+    setFirstTurn(player) {
+      if (this.turnsTaken === 0) this.setTurn(player);
+    }
+
     getBoard() {
       return this.cells;
     }
