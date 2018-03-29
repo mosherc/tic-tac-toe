@@ -29,7 +29,8 @@
           </ul>
         </div>
         <div *ngIf="state === 'moves'" class="mb-auto w-100 px-3">
-          <div class="card move-log m-3 p-2" *ngIf="board.moveLog.length">
+          <div class="card move-log">
+            <div *ngIf="!board.moveLog.length">No moves yet</div>
             <div *ngFor="let move of board.moveLog">{{move.x}}, {{move.y}} by player {{move.player}}</div>
           </div>
         </div>
@@ -50,7 +51,7 @@
                   <label>Play Against whom?</label>
                   <div class="row player-switch">
                     <p>Local</p>
-                    <input type="checkbox" class="checkbox-input" id="opponent">
+                    <input type="checkbox" class="checkbox-input" id="opponent" name="opponent">
                     <label class="checkbox-label" for="opponent"></label>
                     <p>AI</p>
                   </div>
@@ -59,8 +60,8 @@
                 <label>Who should start?</label>
                 <div class="row player-switch">
                   <i class="fas fa-times"></i>
-                  <input type="checkbox" class="checkbox-input" id="start">
-                  <label class="checkbox-label" for="start"></label>
+                  <input type="checkbox" class="checkbox-input" id="starter" name="starter" [(ngModel)]="starter" (change)="switchStarter()">
+                  <label class="checkbox-label" for="starter"></label>
                   <i class="far fa-circle"></i>
                 </div>
               </div>

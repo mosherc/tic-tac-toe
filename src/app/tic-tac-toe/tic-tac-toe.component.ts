@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { TicTacToeBoard } from '../tic-tac-toe-board';
 
 @Component({
@@ -10,6 +11,7 @@ export class TicTacToeComponent implements OnInit {
 
   board: TicTacToeBoard = new TicTacToeBoard();
   state = 'moves';
+  starter = false;
 
   constructor() { }
 
@@ -18,6 +20,7 @@ export class TicTacToeComponent implements OnInit {
 
   newGame() {
     this.board = new TicTacToeBoard();
+    this.switchStarter();
     console.log(this.board);
   }
 
@@ -25,4 +28,9 @@ export class TicTacToeComponent implements OnInit {
     this.state = state;
   }
 
+  switchStarter() {
+    if (!this.board.turnsTaken) {
+      this.board.whoseTurn = this.starter ? 'O' : 'X';
+    }
+  }
 }

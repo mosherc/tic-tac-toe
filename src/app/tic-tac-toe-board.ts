@@ -1,7 +1,7 @@
 export class TicTacToeBoard {
 
   constructor(
-    public cells = [["-", "-", "-"], ["-", "-", "-"], ["-", "-", "-"]],
+    public cells = [['-', '-', '-'], ['-', '-', '-'], ['-', '-', '-']],
     public turnsTaken = 0,
     public whoseTurn = 'X',
     public winner = false,
@@ -18,7 +18,7 @@ export class TicTacToeBoard {
     }
 
     setFirstTurn(player) {
-      if (this.turnsTaken === 0) this.setTurn(player);
+      if (this.turnsTaken === 0) { this.setTurn(player); }
     }
 
     getBoard() {
@@ -37,19 +37,17 @@ export class TicTacToeBoard {
       console.log(`${x} , ${y}`);
       if (this.cells[x][y] === '-' && !this.winner) {
         this.cells[x][y] = this.whoseTurn;
-        if (this.turnsTaken >= 4) this.checkWinner(x, y);
+        if (this.turnsTaken >= 4) { this.checkWinner(x, y); }
         this.logMove(x, y);
         this.switchTurn();
-        console.log(this.cells);
-      }
-      else {
+        this.turnsTaken++;
+      } else {
         new Audio('assets/sounds/Basso.mp3').play();
       }
     }
 
     switchTurn() {
       this.whoseTurn = this.whoseTurn === 'X' ? 'O' : 'X';
-      this.turnsTaken++;
     }
 
     checkWinner(x, y) {
@@ -61,7 +59,7 @@ export class TicTacToeBoard {
           this.winner = this.checkUpDiag();
         }
       }
-      if(this.winner) {
+      if (this.winner) {
         this.winningPlayer = this.whoseTurn;
       }
       return this.winner;
@@ -73,12 +71,11 @@ export class TicTacToeBoard {
         'y': y,
         'player': this.whoseTurn
       });
-      console.log(this.moveLog);
     }
 
     undo() {
       const move = this.moveLog.pop();
-      this.cells[move.x][move.y] = "-";
+      this.cells[move.x][move.y] = '-';
       this.whoseTurn = move.player === 'X' ? 'X' : 'O';
       this.turnsTaken--;
     }

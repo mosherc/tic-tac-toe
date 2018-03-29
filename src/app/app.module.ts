@@ -7,6 +7,7 @@ import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { TicTacToeComponent } from './tic-tac-toe/tic-tac-toe.component';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -18,6 +19,7 @@ import { TicTacToeComponent } from './tic-tac-toe/tic-tac-toe.component';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    FormsModule,
     RouterModule.forRoot([
             { path: 'welcome', component: WelcomeComponent },
             { path: 'play', component: TicTacToeComponent },
