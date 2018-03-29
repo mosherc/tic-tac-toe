@@ -1,3 +1,5 @@
+@import "../../styles";
+
 .card-panel {
   box-shadow: 0 3px 5px 0 #ccc;
   text-align: center;
@@ -6,7 +8,6 @@
 
 .game-panel {
   height: 500px;
-
   display: flex;
   box-shadow: 0 3px 5px 0 #ccc;
 }
@@ -19,7 +20,7 @@
   border: 1px solid rgba(0,0,0,.125);
 }
 
-@media only screen and (max-width: 768px) {
+@include media-breakpoint-down(md) {
   .game-board {
     height: 400px !important;
   }
@@ -78,7 +79,8 @@ tr:last-child .game-cell {
 	height: 25px;
 	background: #007bff;
 	display: block;
-	border-radius: .25rem;
+  border-radius: .25rem;
+  margin: 0 10px;
 	position: relative;
   transition: all 0.3s ease;
   
@@ -96,6 +98,34 @@ tr:last-child .game-cell {
 
   &:active:after {
     width: 25px;
+  }
+}
+
+.player-switch {
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+
+  i {
+    font-size: 24px;
+    width: 20%;
+  }
+
+  p {
+    line-height: 24px;
+    margin-bottom: 0;
+    font-size: 14px;
+    width: 20%;
+  }
+
+  i:first-child,
+  p:first-child {
+    text-align: right;
+  }
+
+  i:last-child,
+  p:last-child {
+    text-align: left;
   }
 }
 

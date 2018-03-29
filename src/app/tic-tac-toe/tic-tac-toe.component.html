@@ -12,11 +12,11 @@
     </div>
   </div>
   <div class="row d-flex">
-    <div class="col-md-4 col-sm-12 order-md-0 order-1 text-center">
+    <div class="col-lg-4 col-sm-12 order-lg-0 order-1 text-center">
       <div class="game-panel card card-panel flex-column align-items-start">
-        <div class="card-header">
-          Click a square to start playing, X goes first!
-          <ul class="nav nav-tabs card-header-tabs">
+        <div class="card-header w-100">
+          Click a square to start playing!
+          <ul class="nav nav-tabs card-header-tabs mt-2">
             <li class="nav-item">
               <a class="nav-link" (click)="setState('moves')" [ngClass]="{'active' : state === 'moves'}">Moves</a>
             </li>
@@ -33,32 +33,39 @@
             <div *ngFor="let move of board.moveLog">{{move.x}}, {{move.y}} by player {{move.player}}</div>
           </div>
         </div>
-        <div *ngIf="state === 'stats'" class="mb-auto w-100 px-3">
-          <div class="card card-panel m-3 py-1">
+        <div *ngIf="state === 'stats'" class="mb-auto w-100 px-2">
+          <div class="card card-panel m-3 p-2">
             Stats
           </div>
         </div>
-        <div *ngIf="state === 'settings'" class="mb-auto w-100 px-3">
-          <div class="card card-panel m-3 p-3">
-              <form>
-                  <div class="form-group">
-                    <label for="exampleInputEmail1">Who should start?</label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-                    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+        <div *ngIf="state === 'settings'" class="mb-auto w-100 px-2">
+          <div class="card card-panel m-3 p-2">
+            <form>
+              <!-- <div class="form-group">
+                <label for="exampleInputEmail1">Who should start?</label>
+                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+              </div> -->
+              <div class="form-group">
+                  <label>Play Against whom?</label>
+                  <div class="row player-switch">
+                    <p>Local</p>
+                    <input type="checkbox" class="checkbox-input" id="opponent">
+                    <label class="checkbox-label" for="opponent"></label>
+                    <p>AI</p>
                   </div>
-                  <div class="form-group">
-                    <label for="exampleInputPassword1">Password</label>
-                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                  </div>
-                  <div class="form-check">
-                    <label>Who should start?</label>
-                    Player X
-                    <input type="checkbox" class="checkbox-input" id="switch">
-                    <label class="checkbox-label" for="switch"></label>
-                    Player O
-                  </div>
-                  <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
+                </div>
+              <div class="form-group">
+                <label>Who should start?</label>
+                <div class="row player-switch">
+                  <i class="fas fa-times"></i>
+                  <input type="checkbox" class="checkbox-input" id="start">
+                  <label class="checkbox-label" for="start"></label>
+                  <i class="far fa-circle"></i>
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
           </div>
         </div>
         <div class="mx-auto my-3">
@@ -72,7 +79,7 @@
         </div>
       </div>
     </div>
-    <div class="col-md-8 col-sm-12 order-md-1 order-0">
+    <div class="col-lg-8 col-sm-12 order-lg-1 order-0">
       <table class="table game-board card-panel">
         <tbody>
           <tr *ngFor="let column of board.cells; let x = index">
