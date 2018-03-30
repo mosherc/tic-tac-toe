@@ -8,3 +8,17 @@ $font-stack:    Helvetica, sans-serif;
 body {
   font: 100% $font-stack;
 }
+
+.card-header-tabs .nav-link {
+  transition: all 0.3s ease;
+
+  &.active {
+    color: #007bff;
+  }
+
+  &:hover {
+    color: #007bff !important;
+  }
+
+  cursor: pointer;
+}
