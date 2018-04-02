@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { TicTacToeBoard } from '../tic-tac-toe-board';
+import { SessionComponent } from '../session/session.component';
 
 @Component({
   selector: 'app-tic-tac-toe',
@@ -13,6 +14,9 @@ export class TicTacToeComponent implements OnInit {
   state = 'moves';
   starter = false;
 
+  @Output() notify: EventEmitter<TicTacToeBoard> = new EventEmitter<TicTacToeBoard>();
+  @Input() sessionComp: SessionComponent;
+
   constructor() { }
 
   ngOnInit() {
@@ -21,11 +25,20 @@ export class TicTacToeComponent implements OnInit {
   newGame() {
     this.board = new TicTacToeBoard();
     this.switchStarter();
-    console.log(this.board);
+  }
+
+  undo() {
+    this.board.undo();
+    this.sessionComp.session.undoStats();
   }
 
   setState(state) {
     this.state = state;
+  }
+
+  takeTurn(x, y) {
+    this.board.takeTurn(x, y);
+    this.notify.emit(this.board);
   }
 
   switchStarter() {

@@ -8,13 +8,15 @@ import { AppComponent } from './app.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { TicTacToeComponent } from './tic-tac-toe/tic-tac-toe.component';
 import { FormsModule } from '@angular/forms';
+import { SessionComponent } from './session/session.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     WelcomeComponent,
-    TicTacToeComponent
+    TicTacToeComponent,
+    SessionComponent
   ],
   imports: [
     BrowserModule,
@@ -22,7 +24,7 @@ import { FormsModule } from '@angular/forms';
     FormsModule,
     RouterModule.forRoot([
             { path: 'welcome', component: WelcomeComponent },
-            { path: 'play', component: TicTacToeComponent },
+            { path: 'play', component: SessionComponent },
             { path: '', redirectTo: 'welcome', pathMatch: 'full' },
             { path: '**', redirectTo: 'welcome', pathMatch: 'full' }
         ]),

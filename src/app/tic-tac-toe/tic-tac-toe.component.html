@@ -35,8 +35,44 @@
           </div>
         </div>
         <div *ngIf="state === 'stats'" class="mb-auto w-100 px-2">
-          <div class="card card-panel m-3 p-2">
-            Stats
+          <div class="card card-panel m-3 p-3">
+            <table class="table">
+              <tr>
+                <td>
+                  Total Games Played:
+                </td>
+                <td>
+                  {{sessionComp.session.gamesPlayed}}
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Total Wins:
+                </td>
+                <td>
+                  {{sessionComp.session.wins}}
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Total Turns:
+                </td>
+                <td>
+                  {{sessionComp.session.totalTurns}}
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Total Moves Undone:
+                </td>
+                <td>
+                  {{sessionComp.session.movesUndone}}
+                </td>
+              </tr>
+            </table>
+            <div>
+              <button class="btn btn-primary" (click)="sessionComp.newSession()">Reset Stats</button>
+            </div>
           </div>
         </div>
         <div *ngIf="state === 'settings'" class="mb-auto w-100 px-2">
@@ -48,14 +84,14 @@
                 <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
               </div> -->
               <div class="form-group">
-                  <label>Play Against whom?</label>
-                  <div class="row player-switch">
-                    <p>Local</p>
-                    <input type="checkbox" class="checkbox-input" id="opponent" name="opponent">
-                    <label class="checkbox-label" for="opponent"></label>
-                    <p>AI</p>
-                  </div>
+                <label>Play Against whom?</label>
+                <div class="row player-switch">
+                  <p>Local</p>
+                  <input type="checkbox" class="checkbox-input" id="opponent" name="opponent">
+                  <label class="checkbox-label" for="opponent"></label>
+                  <p>AI</p>
                 </div>
+              </div>
               <div class="form-group">
                 <label>Who should start?</label>
                 <div class="row player-switch">
@@ -71,7 +107,7 @@
         </div>
         <div class="mx-auto my-3">
           <div class="btn-group">
-            <button class="btn btn-outline-primary" (click)="board.undo()" [ngClass]="{'disabled': board.turnsTaken === 0 || board.winner}"
+            <button class="btn btn-outline-primary" (click)="undo()" [ngClass]="{'disabled': board.turnsTaken === 0 || board.winner}"
               [disabled]="board.turnsTaken === 0 || board.winner">
               <i class="fas fa-undo"></i> Undo
             </button>
@@ -84,7 +120,7 @@
       <table class="table game-board card-panel">
         <tbody>
           <tr *ngFor="let column of board.cells; let x = index">
-            <td *ngFor="let cell of column; let y = index" (click)="board.takeTurn(x,y)" class="game-cell">
+            <td *ngFor="let cell of column; let y = index" (click)="takeTurn(x,y)" class="game-cell">
               <i [ngClass]="{'fas fa-times': board.getCell(x, y)==='X', 'far fa-circle': board.getCell(x, y)==='O'}"></i>
             </td>
           </tr>
