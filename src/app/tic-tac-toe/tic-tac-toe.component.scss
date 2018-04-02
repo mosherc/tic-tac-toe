@@ -131,6 +131,10 @@ tr:last-child .game-cell {
   }
 }
 
+tbody tr:first-child td {
+  border-top: none;
+}
+
 /* @media only screen and (max-width: 812px){
   .move-log {
     max-height: 200px;

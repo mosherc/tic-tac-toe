@@ -34,76 +34,72 @@
             <div *ngFor="let move of board.moveLog">{{move.x}}, {{move.y}} by player {{move.player}}</div>
           </div>
         </div>
-        <div *ngIf="state === 'stats'" class="mb-auto w-100 px-2">
-          <div class="card card-panel m-3 p-3">
-            <table class="table">
-              <tr>
-                <td>
-                  Total Games Played:
-                </td>
-                <td>
-                  {{sessionComp.session.gamesPlayed}}
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  Total Wins:
-                </td>
-                <td>
-                  {{sessionComp.session.wins}}
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  Total Turns:
-                </td>
-                <td>
-                  {{sessionComp.session.totalTurns}}
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  Total Moves Undone:
-                </td>
-                <td>
-                  {{sessionComp.session.movesUndone}}
-                </td>
-              </tr>
-            </table>
-            <div>
-              <button class="btn btn-primary" (click)="sessionComp.newSession()">Reset Stats</button>
-            </div>
+        <div *ngIf="state === 'stats'" class="mb-auto w-100 p-3">
+          <table class="table">
+            <tr>
+              <td>
+                Total Games Played:
+              </td>
+              <td>
+                {{sessionComp.session.gamesPlayed}}
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Total Wins:
+              </td>
+              <td>
+                {{sessionComp.session.wins}}
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Total Turns:
+              </td>
+              <td>
+                {{sessionComp.session.totalTurns}}
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Total Moves Undone:
+              </td>
+              <td>
+                {{sessionComp.session.movesUndone}}
+              </td>
+            </tr>
+          </table>
+          <div>
+            <button class="btn btn-primary" (click)="sessionComp.newSession()">Reset Stats</button>
           </div>
         </div>
-        <div *ngIf="state === 'settings'" class="mb-auto w-100 px-2">
-          <div class="card card-panel m-3 p-2">
-            <form>
-              <!-- <div class="form-group">
+        <div *ngIf="state === 'settings'" class="mb-auto w-100 p-3">
+          <form>
+            <!-- <div class="form-group">
                 <label for="exampleInputEmail1">Who should start?</label>
                 <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
                 <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
               </div> -->
-              <div class="form-group">
-                <label>Play Against whom?</label>
-                <div class="row player-switch">
-                  <p>Local</p>
-                  <input type="checkbox" class="checkbox-input" id="opponent" name="opponent">
-                  <label class="checkbox-label" for="opponent"></label>
-                  <p>AI</p>
-                </div>
+            <div class="form-group">
+              <label>Play Against whom?</label>
+              <div class="row player-switch">
+                <p>Local</p>
+                <input type="checkbox" class="checkbox-input" id="opponent" name="opponent">
+                <label class="checkbox-label" for="opponent"></label>
+                <p>AI</p>
               </div>
-              <div class="form-group">
-                <label>Who should start?</label>
-                <div class="row player-switch">
-                  <i class="fas fa-times"></i>
-                  <input type="checkbox" class="checkbox-input" id="starter" name="starter" [(ngModel)]="starter" (change)="switchStarter()">
-                  <label class="checkbox-label" for="starter"></label>
-                  <i class="far fa-circle"></i>
-                </div>
+            </div>
+            <div class="form-group">
+              <label>Who should start?</label>
+              <div class="row player-switch">
+                <i class="fas fa-times"></i>
+                <input type="checkbox" class="checkbox-input" id="starter" name="starter" [(ngModel)]="starter" (change)="switchStarter()">
+                <label class="checkbox-label" for="starter"></label>
+                <i class="far fa-circle"></i>
               </div>
-              <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
-          </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
         </div>
         <div class="mx-auto my-3">
           <div class="btn-group">
