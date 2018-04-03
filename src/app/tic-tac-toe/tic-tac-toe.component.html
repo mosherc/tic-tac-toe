@@ -68,6 +68,15 @@
                 {{sessionComp.session.movesUndone}}
               </td>
             </tr>
+            <tr>
+              <td>
+                Heatmap:
+              </td>
+              <td>
+                <input type="checkbox" class="checkbox-input" id="heatmap" name="heatmap" [(ngModel)]="heatmap">
+                <label class="checkbox-label" for="heatmap"></label>
+              </td>
+            </tr>
           </table>
           <div>
             <button class="btn btn-primary" (click)="sessionComp.newSession()">Reset Stats</button>

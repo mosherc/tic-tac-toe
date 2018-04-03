@@ -11,7 +11,9 @@ export class Session {
     public totalTurns = 0,
     public movesUndone = 0,
     public allMoves: Move[] = [],
-    public moveFreq = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
+    public moveFreq = [[0, 0, 0], [0, 0, 0], [0, 0, 0]],
+    public minFreq = 0,
+    public maxFreq = 0
   ) {}
 
   getBoard() {
@@ -67,8 +69,10 @@ export class Session {
   mostPopularSpace() {
     const flat = [].concat(...this.moveFreq);
     const flatSort = [...flat].sort((a, b) => a - b);
+    this.minFreq = flatSort[0];
+    this.maxFreq = flatSort[8];
     const index = flat.indexOf(flatSort[8]);
-    
+
     console.log('most common move: ' + JSON.stringify(this.parseFlatIndex(index)));
   }
 

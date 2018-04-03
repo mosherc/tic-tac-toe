@@ -46,6 +46,10 @@
   background-color: #eee;
 }
 
+.game-cell.heatmap {
+  background-color: heatmap(5, 2, 10);
+}
+
 td:first-child {
   border-left: none;
 }
@@ -80,7 +84,7 @@ tr:last-child .game-cell {
 	width: 50px;
 	height: 25px;
 	background: #007bff;
-	display: block;
+	// display: block;
   border-radius: .25rem;
   margin: 0 10px;
 	position: relative;
@@ -134,6 +138,11 @@ tr:last-child .game-cell {
 tbody tr:first-child td {
   border-top: none;
 }
+
+// @function heatmap($value, $min, $max) {
+//   $weight: ($value - $min)/($max - $min);
+//   @return mix(blue, red, $weight);
+// }
 
 /* @media only screen and (max-width: 812px){
   .move-log {
