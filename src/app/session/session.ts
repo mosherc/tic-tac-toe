@@ -65,9 +65,7 @@ export class Session {
   }
 
   mostPopularSpace() {
-    // const index = Math.max.apply(null, this.moveFreq);
     const flat = [].concat(...this.moveFreq);
-    console.log(flat);
     const flatSort = [...flat].sort((a, b) => a - b);
     const index = flat.indexOf(flatSort[8]);
     
@@ -77,6 +75,9 @@ export class Session {
   parseFlatIndex(index) {
     return { x: Math.floor(index / 3), y: index % 3 };
   }
+
+  // moves per game
+  // streaks
 
   newGame() {
     this.board = new TicTacToeBoard();
