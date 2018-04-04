@@ -1,13 +1,9 @@
 <div class="container px-5">
   <div class="row">
-    <div *ngIf="board.winner" class="text-center w-100 px-3">
-      <div class="card card-body card-panel mt-3">
-        Congrats to Player {{board.winningPlayer}} on winning!
-      </div>
-    </div>
-    <div *ngIf="board.moveLog.length === 9 && !board.winner" class="text-center w-100 px-3">
-      <div class="card card-body card-panel mt-3">
-        No one won! Would you like to play again?
+    <div *ngIf="board.winner || (board.moveLog.length === 9 && !board.winner)" class="text-center px-3 w-100">
+      <div class="card card-body card-panel mt-3 d-inline-block align-middle w-100">
+        <span>{{gameOverMessage}}</span>
+        <!-- <button class="btn btn-outline-primary float-right" (click)="newGame()" [ngClass]="{'disabled': board.turnsTaken === 0}">New Game</button> -->
       </div>
     </div>
   </div>
@@ -73,7 +69,7 @@
                 Heatmap:
               </td>
               <td>
-                <input type="checkbox" class="checkbox-input" id="heatmap" name="heatmap" [(ngModel)]="heatmap" (change)="toggleHeatmap()">
+                <input type="checkbox" class="checkbox-input" id="heatmap" name="heatmap" [(ngModel)]="heatmap">
                 <label class="checkbox-label" for="heatmap"></label>
               </td>
             </tr>
@@ -84,11 +80,6 @@
         </div>
         <div *ngIf="state === 'settings'" class="mb-auto w-100 p-3">
           <form>
-            <!-- <div class="form-group">
-                <label for="exampleInputEmail1">Who should start?</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-              </div> -->
             <div class="form-group">
               <label>Play Against whom?</label>
               <div class="row player-switch">
@@ -125,7 +116,7 @@
       <table class="table game-board card-panel">
         <tbody>
           <tr *ngFor="let column of board.cells; let x = index">
-            <td *ngFor="let cell of column; let y = index" (click)="takeTurn(x,y)" class="game-cell">
+            <td *ngFor="let cell of column; let y = index" (click)="takeTurn(x,y)" class="game-cell" [ngStyle]="getHeat(x, y)">
               <i [ngClass]="{'fas fa-times': board.getCell(x, y)==='X', 'far fa-circle': board.getCell(x, y)==='O'}"></i>
             </td>
           </tr>

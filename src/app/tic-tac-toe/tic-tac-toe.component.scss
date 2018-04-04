@@ -47,6 +47,17 @@
   filter: brightness(90%);
 }
 
+.game-cell:active {
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  height: 33%;
+  width: 33%;
+  font-size: 50px;
+  border-bottom: 1px solid gray;
+  border-left: 1px solid gray;
+}
+
 td:first-child {
   border-left: none;
 }
