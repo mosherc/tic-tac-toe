@@ -39,15 +39,12 @@
   font-size: 50px;
   border-bottom: 1px solid gray;
   border-left: 1px solid gray;
+  background-color: white;
   transition: all .15s ease-in;
 }
 
 .game-cell:hover {
-  background-color: #eee;
-}
-
-.game-cell.heatmap {
-  background-color: heatmap(5, 2, 10);
+  filter: brightness(90%);
 }
 
 td:first-child {

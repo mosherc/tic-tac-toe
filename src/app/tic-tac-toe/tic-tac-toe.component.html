@@ -73,7 +73,7 @@
                 Heatmap:
               </td>
               <td>
-                <input type="checkbox" class="checkbox-input" id="heatmap" name="heatmap" [(ngModel)]="heatmap">
+                <input type="checkbox" class="checkbox-input" id="heatmap" name="heatmap" [(ngModel)]="heatmap" (change)="toggleHeatmap()">
                 <label class="checkbox-label" for="heatmap"></label>
               </td>
             </tr>

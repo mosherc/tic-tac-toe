@@ -73,7 +73,7 @@ export class Session {
     this.maxFreq = flatSort[8];
     const index = flat.indexOf(flatSort[8]);
 
-    console.log('most common move: ' + JSON.stringify(this.parseFlatIndex(index)));
+    console.log(this.moveFreq);
   }
 
   parseFlatIndex(index) {
