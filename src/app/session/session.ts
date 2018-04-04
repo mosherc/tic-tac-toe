@@ -13,7 +13,8 @@ export class Session {
     public allMoves: Move[] = [],
     public moveFreq = [[0, 0, 0], [0, 0, 0], [0, 0, 0]],
     public minFreq = 0,
-    public maxFreq = 0
+    public maxFreq = 0,
+    public avgSpace = { 'x': 0, 'y': -10000 }
   ) {}
 
   getBoard() {
@@ -63,6 +64,7 @@ export class Session {
     x /= this.totalTurns;
     let y = this.allMoves.map(move => move.y).reduce((move, total) => move + total);
     y /= this.totalTurns;
+    this.avgSpace = { 'x': x, 'y': y };
     // console.log('average move: ' + x + ', ' + y);
   }
 
@@ -72,8 +74,6 @@ export class Session {
     this.minFreq = flatSort[0];
     this.maxFreq = flatSort[8];
     const index = flat.indexOf(flatSort[8]);
-
-    console.log(this.moveFreq);
   }
 
   parseFlatIndex(index) {

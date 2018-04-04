@@ -15,6 +15,7 @@ export class TicTacToeComponent implements OnInit {
   state = 'moves';
   starter = false;
   heatmap = false;
+  average = false;
   gameOverMessage = '';
 
   @Output() notify: EventEmitter<any> = new EventEmitter<any>();
@@ -83,6 +84,16 @@ export class TicTacToeComponent implements OnInit {
     const value = sess.moveFreq[x][y];
     if (this.heatmap) {
       return {'background-color': this.getHeatColor(value, min, max) };
+    }
+  }
+
+  getAvgPos() {
+    let xperc = (this.sessionComp.session.avgSpace.x) / .02;
+    xperc += (50 - xperc) * .3333;
+    let yperc = (this.sessionComp.session.avgSpace.y) / .02;
+    yperc += (50 - yperc) * .3333;
+    if (this.average) {
+      return {'left': `calc(${xperc}% - 20px)`, 'top': `calc(${yperc}% - 20px)` };
     }
   }
 }

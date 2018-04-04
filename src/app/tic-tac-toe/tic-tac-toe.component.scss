@@ -1,5 +1,4 @@
 @import "../../styles";
-
 .card-panel {
   box-shadow: 0 3px 5px 0 #ccc;
   text-align: center;
@@ -17,14 +16,13 @@
   height: 500px;
   box-shadow: 0 3px 5px 0 #ccc;
   border-radius: .25rem;
-  border: 1px solid rgba(0,0,0,.125);
+  border: 1px solid rgba(0, 0, 0, .125);
 }
 
 @include media-breakpoint-down(md) {
   .game-board {
     height: 400px !important;
   }
-
   .game-panel {
     height: auto !important;
   }
@@ -39,7 +37,8 @@
   font-size: 50px;
   border-bottom: 1px solid gray;
   border-left: 1px solid gray;
-  background-color: white;
+  background-color: white; //display: block;
+  position: relative;
   transition: all .15s ease-in;
 }
 
@@ -61,6 +60,7 @@
 td:first-child {
   border-left: none;
 }
+
 tr:last-child .game-cell {
   border-bottom: none;
 }
@@ -72,14 +72,12 @@ tr:last-child .game-cell {
   margin: 1rem;
 }
 
-.checkbox-input{
-	height: 0;
-	width: 0;
+.checkbox-input {
+  height: 0;
+  width: 0;
   visibility: hidden;
-  
-  &:checked + .checkbox-label {
+  &:checked+.checkbox-label {
     background: #28a745;
-
     &:after {
       left: calc(100% - 3px);
       transform: translateX(-100%);
@@ -88,16 +86,14 @@ tr:last-child .game-cell {
 }
 
 .checkbox-label {
-	cursor: pointer;
-	width: 50px;
-	height: 25px;
-	background: #007bff;
-	// display: block;
+  cursor: pointer;
+  width: 50px;
+  height: 25px;
+  background: #007bff; // display: block;
   border-radius: .25rem;
   margin: 0 10px;
-	position: relative;
+  position: relative;
   transition: all 0.3s ease;
-  
   &:after {
     content: '';
     position: absolute;
@@ -106,12 +102,20 @@ tr:last-child .game-cell {
     width: 18px;
     height: 19px;
     background: #fff;
-    border-radius: .25rem;
+    border-radius: .2rem;
     transition: all 0.3s ease;
   }
-
   &:active:after {
     width: 25px;
+  }
+}
+
+td .checkbox-label {
+  height: 15px;
+
+  &:after {
+    height: 9px;
+    border-radius: .1rem;
   }
 }
 
@@ -119,24 +123,20 @@ tr:last-child .game-cell {
   display: flex;
   justify-content: center;
   margin: 0 auto;
-
   i {
     font-size: 24px;
     width: 20%;
   }
-
   p {
     line-height: 24px;
     margin-bottom: 0;
     font-size: 14px;
     width: 20%;
   }
-
   i:first-child,
   p:first-child {
     text-align: right;
   }
-
   i:last-child,
   p:last-child {
     text-align: left;
@@ -147,15 +147,22 @@ tbody tr:first-child td {
   border-top: none;
 }
 
+.avg-crosshair {
+  $ch-color: rgba(53, 196, 206, 0.445);
+  position: absolute;
+  z-index: 1000;
+  background: linear-gradient(to bottom, transparent 40%, $ch-color 40%, $ch-color 60%, transparent 60%), linear-gradient(to right, transparent 40%, $ch-color 40%, $ch-color 60%, transparent 60%);
+  height: 40px;
+  width: 40px;
+}
+
 // @function heatmap($value, $min, $max) {
 //   $weight: ($value - $min)/($max - $min);
 //   @return mix(blue, red, $weight);
 // }
-
 /* @media only screen and (max-width: 812px){
   .move-log {
     max-height: 200px;
     overflow-y: auto;
   }
 } */
-

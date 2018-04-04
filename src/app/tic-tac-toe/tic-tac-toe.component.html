@@ -73,6 +73,15 @@
                 <label class="checkbox-label" for="heatmap"></label>
               </td>
             </tr>
+            <tr>
+              <td>
+                Average Space:
+              </td>
+              <td>
+                <input type="checkbox" class="checkbox-input" id="average" name="average" [(ngModel)]="average">
+                <label class="checkbox-label" for="average"></label>
+              </td>
+            </tr>
           </table>
           <div>
             <button class="btn btn-primary" (click)="sessionComp.newSession()">Reset Stats</button>
@@ -113,10 +122,11 @@
       </div>
     </div>
     <div class="col-lg-8 col-sm-12 order-lg-1 order-0">
+      <div *ngIf="average" class="avg-crosshair" [ngStyle]="getAvgPos()"></div>
       <table class="table game-board card-panel">
         <tbody>
-          <tr *ngFor="let column of board.cells; let x = index">
-            <td *ngFor="let cell of column; let y = index" (click)="takeTurn(x,y)" class="game-cell" [ngStyle]="getHeat(x, y)">
+          <tr *ngFor="let column of board.cells; let y = index">
+            <td *ngFor="let cell of column; let x = index" (click)="takeTurn(x,y)" class="game-cell" [ngStyle]="getHeat(x, y)">
               <i [ngClass]="{'fas fa-times': board.getCell(x, y)==='X', 'far fa-circle': board.getCell(x, y)==='O'}"></i>
             </td>
           </tr>
