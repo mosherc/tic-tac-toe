@@ -8,8 +8,15 @@ export class TicTacToeBoard {
     public whoseTurn = 'X',
     public winner = false,
     public winningPlayer = '',
-    public moveLog = []
-  ) {}
+    public moveLog = [],
+    public possibleMoves: Move[] = []
+  ) {
+    for (let x = 0; x < this.cells.length; x++) {
+      for (let y = 0; y < this.cells[x].length; y++) {
+        this.possibleMoves.push(new Move(x, y, 'O'));
+      }
+    }
+  }
 
     setTurn(player) {
       this.whoseTurn = player;
@@ -45,11 +52,25 @@ export class TicTacToeBoard {
         this.logMove(move);
         this.switchTurn();
         this.turnsTaken++;
+        this.removeAIMove(move);
         return true;
       } else {
         new Audio('assets/sounds/Basso.mp3').play();
         return false;
       }
+    }
+
+    removeAIMove(move: Move) {
+      const removed = new Move(move.x, move.y, 'O');
+      console.log(removed);
+      console.log("^^^^removed^^^^");
+      this.possibleMoves = this.possibleMoves.filter(eachMove => JSON.stringify(eachMove) !== JSON.stringify(removed));
+
+      //   function(eachMove) {
+      //   console.log(eachMove);
+      //   console.log(`equal? ${JSON.stringify(removed) === JSON.stringify(eachMove)}`);
+      // });
+      console.log(this.possibleMoves);
     }
 
     switchTurn() {

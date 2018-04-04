@@ -16,6 +16,7 @@ export class TicTacToeComponent implements OnInit {
   starter = false;
   heatmap = false;
   average = false;
+  opponent = false;
   gameOverMessage = '';
 
   @Output() notify: EventEmitter<any> = new EventEmitter<any>();
@@ -50,6 +51,9 @@ export class TicTacToeComponent implements OnInit {
       if (this.board.moveLog.length === 9 && !this.board.winner) {
         this.gameOverMessage = `No one won! Would you like to play again?`;
       }
+      // if (this.opponent && (this.board.moveLog.length < 9 && !this.board.winner)) {
+      //   setTimeout(this.getRandomMove, 1000);
+      // }
     }
   }
 
@@ -95,5 +99,12 @@ export class TicTacToeComponent implements OnInit {
     if (this.average) {
       return {'left': `calc(${xperc}% - 20px)`, 'top': `calc(${yperc}% - 20px)` };
     }
+  }
+
+  getRandomMove() {
+    let move = this.board.possibleMoves[Math.floor(Math.random() * this.board.possibleMoves.length)];
+    move.player = this.starter ? 'X' : 'O';
+    
+    return this.board.takeTurn(this.getRandomMove());
   }
 }
