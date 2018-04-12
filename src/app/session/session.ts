@@ -65,7 +65,6 @@ export class Session {
     let y = this.allMoves.map(move => move.y).reduce((move, total) => move + total);
     y /= this.totalTurns;
     this.avgSpace = { 'x': x, 'y': y };
-    // console.log('average move: ' + x + ', ' + y);
   }
 
   mostPopularSpace() {
@@ -85,9 +84,5 @@ export class Session {
 
   newGame() {
     this.board = new TicTacToeBoard();
-    console.log(this.board);
   }
-
-  //Session.observe(this.board, changes => console.log(changes));
-
 }

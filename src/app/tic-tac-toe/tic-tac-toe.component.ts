@@ -45,15 +45,15 @@ export class TicTacToeComponent implements OnInit {
     const move = new Move(x, y, this.board.whoseTurn);
     if (this.board.takeTurn(move)) {
       this.notify.emit({board: this.board, move: move});
-      if (this.board.winner) {
-        this.gameOverMessage = `Congrats to Player ${this.board.winningPlayer} on winning!`;
-      }
       if (this.board.moveLog.length === 9 && !this.board.winner) {
         this.gameOverMessage = `No one won! Would you like to play again?`;
       }
-      // if (this.opponent && (this.board.moveLog.length < 9 && !this.board.winner)) {
-      //   setTimeout(this.getRandomMove, 1000);
-      // }
+      if (this.opponent && (this.board.moveLog.length < 9 && !this.board.winner)) {
+        this.getRandomMove();
+      }
+      if (this.board.winner) {
+        this.gameOverMessage = `Congrats to Player ${this.board.winningPlayer} on winning!`;
+      }
     }
   }
 
@@ -102,9 +102,9 @@ export class TicTacToeComponent implements OnInit {
   }
 
   getRandomMove() {
-    let move = this.board.possibleMoves[Math.floor(Math.random() * this.board.possibleMoves.length)];
+    const move = this.board.possibleMoves[Math.floor(Math.random() * this.board.possibleMoves.length)];
     move.player = this.starter ? 'X' : 'O';
-    
-    return this.board.takeTurn(this.getRandomMove());
+
+    return this.board.takeTurn(move);
   }
 }

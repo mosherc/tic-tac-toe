@@ -48,7 +48,9 @@ export class TicTacToeBoard {
       console.log(`${x} , ${y}`);
       if (this.cells[x][y] === '-' && !this.winner) {
         this.cells[x][y] = this.whoseTurn;
-        if (this.turnsTaken >= 4) { this.checkWinner(x, y); }
+        if (this.turnsTaken >= 4) {
+          this.checkWinner(x, y);
+        }
         this.logMove(move);
         this.switchTurn();
         this.turnsTaken++;
@@ -62,15 +64,7 @@ export class TicTacToeBoard {
 
     removeAIMove(move: Move) {
       const removed = new Move(move.x, move.y, 'O');
-      console.log(removed);
-      console.log("^^^^removed^^^^");
       this.possibleMoves = this.possibleMoves.filter(eachMove => JSON.stringify(eachMove) !== JSON.stringify(removed));
-
-      //   function(eachMove) {
-      //   console.log(eachMove);
-      //   console.log(`equal? ${JSON.stringify(removed) === JSON.stringify(eachMove)}`);
-      // });
-      console.log(this.possibleMoves);
     }
 
     switchTurn() {
@@ -92,18 +86,6 @@ export class TicTacToeBoard {
       return this.winner;
     }
 
-    logMove(move: Move) {
-      this.moveLog.push(move);
-    }
-
-    undo() {
-      const move = this.moveLog.pop();
-      this.cells[move.x][move.y] = '-';
-      this.whoseTurn = move.player === 'X' ? 'X' : 'O';
-      this.turnsTaken--;
-      return move;
-    }
-
     checkDownDiag() {
       return this.cells[0][0] === this.cells[1][1] && this.cells [1][1] === this.cells[2][2];
     }
@@ -118,5 +100,17 @@ export class TicTacToeBoard {
 
     checkUpDiag() {
       return this.cells[0][2] === this.cells[1][1] && this.cells [1][1] === this.cells[2][0];
+    }
+
+    logMove(move: Move) {
+      this.moveLog.push(move);
+    }
+
+    undo() {
+      const move = this.moveLog.pop();
+      this.cells[move.x][move.y] = '-';
+      this.whoseTurn = move.player === 'X' ? 'X' : 'O';
+      this.turnsTaken--;
+      return move;
     }
 }
