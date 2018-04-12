@@ -1,6 +1,6 @@
 <div class="container px-5">
   <div class="row">
-    <div *ngIf="board.winner || (board.moveLog.length === 9 && !board.winner)" class="text-center px-3 w-100">
+    <div *ngIf="board.winner || board.moveLog.length === 9" class="text-center px-3 w-100">
       <div class="card card-body card-panel mt-3 d-inline-block align-middle w-100">
         <span>{{gameOverMessage}}</span>
         <!-- <button class="btn btn-outline-primary float-right" (click)="newGame()" [ngClass]="{'disabled': board.turnsTaken === 0}">New Game</button> -->
@@ -107,7 +107,9 @@
                 <i class="far fa-circle"></i>
               </div>
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <div class="text-muted font-italic" *ngIf="thinking">
+              Thinking...
+            </div>
           </form>
         </div>
         <div class="mx-auto my-3">

@@ -18,6 +18,7 @@ export class TicTacToeComponent implements OnInit {
   average = false;
   opponent = false;
   gameOverMessage = '';
+  thinking = false;
 
   @Output() notify: EventEmitter<any> = new EventEmitter<any>();
   @Input() sessionComp: SessionComponent;
@@ -42,18 +43,16 @@ export class TicTacToeComponent implements OnInit {
   }
 
   takeTurn(x, y) {
+    console.log("turn");
     const move = new Move(x, y, this.board.whoseTurn);
     if (this.board.takeTurn(move)) {
       this.notify.emit({board: this.board, move: move});
-      if (this.board.moveLog.length === 9 && !this.board.winner) {
-        this.gameOverMessage = `No one won! Would you like to play again?`;
-      }
+      this.getEndMessage();
       if (this.opponent && (this.board.moveLog.length < 9 && !this.board.winner)) {
-        this.getRandomMove();
+        this.thinking = true;
+        setTimeout(() => this.getRandomMove(), 2000);
       }
-      if (this.board.winner) {
-        this.gameOverMessage = `Congrats to Player ${this.board.winningPlayer} on winning!`;
-      }
+
     }
   }
 
@@ -105,6 +104,18 @@ export class TicTacToeComponent implements OnInit {
     const move = this.board.possibleMoves[Math.floor(Math.random() * this.board.possibleMoves.length)];
     move.player = this.starter ? 'X' : 'O';
 
-    return this.board.takeTurn(move);
+    if (this.board.takeTurn(move)) {
+      this.notify.emit({board: this.board, move: move});
+      this.getEndMessage();
+    }
+    this.thinking = false;
+  }
+
+  getEndMessage() {
+    if (this.board.winner) {
+      this.gameOverMessage = `Congrats to Player ${this.board.winningPlayer} on winning!`;
+    } else if (this.board.moveLog.length === 9 && !this.board.winner) {
+      this.gameOverMessage = `No one won! Would you like to play again?`;
+    }
   }
 }
