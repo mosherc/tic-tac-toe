@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, trigger, state, style, transition, animate, keyframes } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { TicTacToeBoard } from '../tic-tac-toe-board';
 import { SessionComponent } from '../session/session.component';
@@ -7,7 +7,22 @@ import { Move } from './move';
 @Component({
   selector: 'app-tic-tac-toe',
   templateUrl: './tic-tac-toe.component.html',
-  styleUrls: ['./tic-tac-toe.component.scss']
+  styleUrls: ['./tic-tac-toe.component.scss'],
+  animations: [
+    trigger('triggerSquare', [
+      state('-', style({
+        transform: 'scale(0)'
+      })),
+      state('X', style({
+        transform: 'scale(1)'
+      })),
+      state('O', style({
+        transform: 'scale(1)'
+      })),
+      transition('- => X', animate('1000ms ease-in')),
+      transition('- => O', animate('1000ms ease-in'))
+    ])
+  ]
 })
 export class TicTacToeComponent implements OnInit {
 

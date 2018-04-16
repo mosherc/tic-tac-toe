@@ -129,7 +129,7 @@
         <tbody>
           <tr *ngFor="let column of board.cells; let y = index">
             <td *ngFor="let cell of column; let x = index" (click)="takeTurn(x,y)" class="game-cell" [ngStyle]="getHeat(x, y)">
-              <i [ngClass]="{'fas fa-times': board.getCell(x, y)==='X', 'far fa-circle': board.getCell(x, y)==='O'}"></i>
+              <i [@triggerSquare]="cell" [ngClass]="{'fas fa-times': board.getCell(x, y)==='X', 'far fa-circle': board.getCell(x, y)==='O'}"></i>
             </td>
           </tr>
         </tbody>
