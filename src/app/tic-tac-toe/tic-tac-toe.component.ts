@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { TicTacToeBoard } from '../tic-tac-toe-board';
 import { SessionComponent } from '../session/session.component';
 import { Move } from './move';
+import { trigger, style, transition, animate, group, state } from '@angular/animations';
 
 @Component({
   selector: 'app-tic-tac-toe',
