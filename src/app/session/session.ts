@@ -15,7 +15,6 @@ export class Session {
     public minFreq = 0,
     public maxFreq = 0,
     public avgSpace = { 'x': 0, 'y': -10000 }
-    // let's add difficulty
   ) {}
 
   getBoard() {
