@@ -3,12 +3,43 @@ import { NgForm } from '@angular/forms';
 import { TicTacToeBoard } from '../tic-tac-toe-board';
 import { SessionComponent } from '../session/session.component';
 import { Move } from './move';
-import { trigger, style, transition, animate, group, state } from '@angular/animations';
+import { trigger, style, transition, animate, group, state, keyframes } from '@angular/animations';
 
 @Component({
   selector: 'app-tic-tac-toe',
   templateUrl: './tic-tac-toe.component.html',
-  styleUrls: ['./tic-tac-toe.component.scss']
+  styleUrls: ['./tic-tac-toe.component.scss'],
+  animations: [
+    trigger('gameOver', [
+      state('false', style({opacity: 0, 'margin-bottom': 0, height: 0})),
+      transition('false => true', animate('500ms', keyframes([
+        style({opacity: 0, height: 0, 'margin-bottom': 0, offset: 0}),
+        style({opacity: .1, height: '*', 'margin-bottom': '*', offset: 0.5}),
+        style({opacity: 1, offset: 1.0})
+      ]))),
+      transition('true => false', animate('500ms', keyframes([
+        style({opacity: 1, height: '*', 'margin-bottom': '*', offset: 0}),
+        style({opacity: .1, offset: 0.5}),
+        style({opacity: 0, height: 0, 'margin-bottom': 0, offset: 1.0})
+      ])))
+    ]),
+    trigger('played', [
+      transition(':enter', [
+        style({opacity: 0}),
+        animate('500ms', style({opacity: 1}))
+      ])
+    ]),
+    trigger('moveLog', [
+      transition(':enter', [
+        style({opacity: 0, height: 0}),
+        animate('500ms', keyframes([
+          style({opacity: 0, height: 0, offset: 0}),
+          style({opacity: .1, height: '*', offset: 0.5}),
+          style({opacity: 1, offset: 1.0})
+        ])
+      ])
+    ])
+  ]
 })
 export class TicTacToeComponent implements OnInit {
 
@@ -20,6 +51,8 @@ export class TicTacToeComponent implements OnInit {
   opponent = false;
   gameOverMessage = '';
   thinking = false;
+  gameOver = false;
+  difficulty;
 
   @Output() notify: EventEmitter<any> = new EventEmitter<any>();
   @Input() sessionComp: SessionComponent;
@@ -27,9 +60,11 @@ export class TicTacToeComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    this.difficulty = this.sessionComp.session.difficulty;
   }
 
   newGame() {
+    this.gameOver = false;
     this.board = new TicTacToeBoard();
     this.switchStarter();
   }
@@ -44,6 +79,7 @@ export class TicTacToeComponent implements OnInit {
   }
 
   takeTurn(x, y) {
+    this.difficulty = this.sessionComp.session.difficulty;
     console.log("turn");
     const move = new Move(x, y, this.board.whoseTurn);
     if (this.board.takeTurn(move)) {
@@ -51,10 +87,10 @@ export class TicTacToeComponent implements OnInit {
       this.getEndMessage();
       if (this.opponent && (this.board.moveLog.length < 9 && !this.board.winner)) {
         this.thinking = true;
-        setTimeout(() => this.getRandomMove(), 2000);
+        setTimeout(() => this.getComputerMove(this.difficulty), 1000);
       }
-
     }
+    this.gameOver = this.board.winner || this.board.moveLog.length === 9;
   }
 
   switchStarter() {
@@ -68,16 +104,9 @@ export class TicTacToeComponent implements OnInit {
     const white = 'FFFFFF';
     const cMin = 'FF0000';
     const ratio = (value - min) / (max - min);
-
-    //if (ratio > 0.5) {
-      const r = Math.ceil(parseInt(cMin.substring(0, 2), 16) * ratio + parseInt(white.substring(0, 2), 16) * (1 - ratio));
-      const g = Math.ceil(parseInt(cMin.substring(2, 4), 16) * ratio + parseInt(white.substring(2, 4), 16) * (1 - ratio));
-      const b = Math.ceil(parseInt(cMin.substring(4, 6), 16) * ratio + parseInt(white.substring(4, 6), 16) * (1 - ratio));
-    //} else {
-      // const r = Math.ceil(parseInt(white.substring(0, 2), 16) * ratio + parseInt(cMax.substring(0, 2), 16) * (1 - ratio));
-      // const g = Math.ceil(parseInt(white.substring(2, 4), 16) * ratio + parseInt(cMax.substring(2, 4), 16) * (1 - ratio));
-      // const b = Math.ceil(parseInt(white.substring(4, 6), 16) * ratio + parseInt(cMax.substring(4, 6), 16) * (1 - ratio));
-    //}
+    const r = Math.ceil(parseInt(cMin.substring(0, 2), 16) * ratio + parseInt(white.substring(0, 2), 16) * (1 - ratio));
+    const g = Math.ceil(parseInt(cMin.substring(2, 4), 16) * ratio + parseInt(white.substring(2, 4), 16) * (1 - ratio));
+    const b = Math.ceil(parseInt(cMin.substring(4, 6), 16) * ratio + parseInt(white.substring(4, 6), 16) * (1 - ratio));
     return `rgba(${r},${g},${b}, 0.75)`;
   }
 
@@ -101,8 +130,19 @@ export class TicTacToeComponent implements OnInit {
     }
   }
 
-  getRandomMove() {
-    const move = this.board.possibleMoves[Math.floor(Math.random() * this.board.possibleMoves.length)];
+  getComputerMove(difficulty) {
+    let move;
+    switch (difficulty) {
+      case 'random':
+        move = this.getRandomMove();
+        break;
+      case 'offensive':
+        move = this.getOffensiveMove();
+        break;
+      case 'defensive':
+        move = this.getDefensiveMove();
+        break;
+    }
     move.player = this.starter ? 'X' : 'O';
 
     if (this.board.takeTurn(move)) {
@@ -110,6 +150,18 @@ export class TicTacToeComponent implements OnInit {
       this.getEndMessage();
     }
     this.thinking = false;
+  }
+
+  getRandomMove() {
+    return this.board.possibleMoves[Math.floor(Math.random() * this.board.possibleMoves.length)];
+  }
+
+  getOffensiveMove() {
+    return this.board.possibleMoves[Math.floor(Math.random() * this.board.possibleMoves.length)];
+  }
+
+  getDefensiveMove() {
+    return this.board.possibleMoves[Math.floor(Math.random() * this.board.possibleMoves.length)];
   }
 
   getEndMessage() {

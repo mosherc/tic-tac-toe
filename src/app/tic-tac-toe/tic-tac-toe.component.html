@@ -1,6 +1,6 @@
 <div class="container px-5">
-  <div class="row">
-    <div *ngIf="board.winner || board.moveLog.length === 9" class="text-center px-3 w-100">
+  <div class="row" [@gameOver]="gameOver">
+    <div class="text-center px-3 w-100" >
       <div class="card card-body card-panel mt-3 d-inline-block align-middle w-100">
         <span>{{gameOverMessage}}</span>
         <!-- <button class="btn btn-outline-primary float-right" (click)="newGame()" [ngClass]="{'disabled': board.turnsTaken === 0}">New Game</button> -->
@@ -27,7 +27,7 @@
         <div *ngIf="state === 'moves'" class="mb-auto w-100 px-3">
           <div class="card move-log">
             <div *ngIf="!board.moveLog.length">No moves yet</div>
-            <div *ngFor="let move of board.moveLog">{{move.x}}, {{move.y}} by player {{move.player}}</div>
+            <div *ngFor="let move of board.moveLog" [@moveLog]>{{move.x}}, {{move.y}} by player {{move.player}}</div>
           </div>
         </div>
         <div *ngIf="state === 'stats'" class="mb-auto w-100 p-3">
@@ -98,6 +98,16 @@
                 <p>AI</p>
               </div>
             </div>
+            <div class="form-group" [@gameOver]="opponent">
+              <label>Play Against whom?</label>
+              <div class="row player-switch">
+                <select class="custom-select difficulty-select" [(ngModel)]="difficulty" name="difficulty">
+                  <option value="random">Random</option>
+                  <option value="offensive">Offensive</option>
+                  <option value="defensive">Defensive</option>
+                </select>
+              </div>
+            </div>
             <div class="form-group">
               <label>Who should start?</label>
               <div class="row player-switch">
@@ -129,7 +139,7 @@
         <tbody>
           <tr *ngFor="let column of board.cells; let y = index">
             <td *ngFor="let cell of column; let x = index" (click)="takeTurn(x,y)" class="game-cell" [ngStyle]="getHeat(x, y)">
-              <i [ngClass]="{'fas fa-times': board.getCell(x, y)==='X', 'far fa-circle': board.getCell(x, y)==='O'}"></i>
+              <i *ngIf="board.getCell(x, y)!=='-'" [@played] [ngClass]="{'fas fa-times': board.getCell(x, y)==='X', 'far fa-circle': board.getCell(x, y)==='O'}"></i>
             </td>
           </tr>
         </tbody>

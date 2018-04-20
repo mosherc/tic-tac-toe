@@ -157,6 +157,10 @@ td .checkbox-label {
   }
 }
 
+.difficulty-select {
+  width: auto !important;
+}
+
 tbody tr:first-child td {
   border-top: none;
 }
@@ -170,14 +174,3 @@ tbody tr:first-child td {
   height: 40px;
   width: 40px;
 }
-
-// @function heatmap($value, $min, $max) {
-//   $weight: ($value - $min)/($max - $min);
-//   @return mix(blue, red, $weight);
-// }
-/* @media only screen and (max-width: 812px){
-  .move-log {
-    max-height: 200px;
-    overflow-y: auto;
-  }
-} */
