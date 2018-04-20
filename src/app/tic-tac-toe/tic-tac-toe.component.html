@@ -1,9 +1,9 @@
 <div class="container px-5">
   <div class="row" [@gameOver]="gameOver">
-    <div class="text-center px-3 w-100" >
-      <div class="card card-body card-panel mt-3 d-inline-block align-middle w-100">
-        <span>{{gameOverMessage}}</span>
-        <!-- <button class="btn btn-outline-primary float-right" (click)="newGame()" [ngClass]="{'disabled': board.turnsTaken === 0}">New Game</button> -->
+    <div class="text-center px-3 w-100">
+      <div class="card card-body card-panel game-over mt-3 w-100">
+        <div>{{gameOverMessage}}</div>
+        <button class="btn btn-sm btn-primary" (click)="newGame()">New Game?</button>
       </div>
     </div>
   </div>

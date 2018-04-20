@@ -6,6 +6,17 @@
   margin: 25px auto 0 auto;
 }
 
+.game-over {
+  display: flex;
+  justify-content: center;
+  flex-flow: row wrap;
+
+  * {
+    margin: auto 20px;
+    vertical-align: middle;
+  }
+}
+
 .game-panel {
   height: 500px;
   display: -webkit-box;
