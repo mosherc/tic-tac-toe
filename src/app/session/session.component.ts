@@ -15,9 +15,7 @@ export class SessionComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
-    console.log('local storage: ' + localStorage.getItem('session'));
-  }
+  ngOnInit() {}
 
   turnTaken(boardMoveObj) {
     this.session.update(boardMoveObj.board, boardMoveObj.move);

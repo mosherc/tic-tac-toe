@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, ChangeDetectorRef } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { TicTacToeBoard } from '../tic-tac-toe-board';
 import { SessionComponent } from '../session/session.component';
@@ -23,6 +23,11 @@ import { trigger, style, transition, animate, group, state, keyframes } from '@a
         style({opacity: 0, height: 0, 'margin-bottom': 0, offset: 1.0})
       ])))
     ]),
+    trigger('newGamePulse', [
+      state('false', style({transform: 'scale(1)'})),
+      state('true', style({transform: 'scale(1.1)'})),
+      transition('* => *', animate('500ms ease-in-out'))
+    ]),
     trigger('played', [
       transition(':enter', [
         style({opacity: 0}),
@@ -40,7 +45,7 @@ import { trigger, style, transition, animate, group, state, keyframes } from '@a
           style({opacity: 0, height: 0, offset: 0}),
           style({opacity: .1, height: '*', offset: 0.5}),
           style({opacity: 1, offset: 1.0})
-        ])
+        ]))
       ])
     ])
   ]
@@ -57,11 +62,12 @@ export class TicTacToeComponent implements OnInit {
   thinking = false;
   gameOver = false;
   difficulty;
+  countdown = 5;
 
   @Output() notify: EventEmitter<any> = new EventEmitter<any>();
   @Input() sessionComp: SessionComponent;
 
-  constructor() { }
+  constructor(private cdr: ChangeDetectorRef) { }
 
   ngOnInit() {
     this.difficulty = this.sessionComp.session.difficulty;
@@ -69,6 +75,7 @@ export class TicTacToeComponent implements OnInit {
 
   newGame() {
     this.gameOver = false;
+    this.countdown = 5;
     this.board = new TicTacToeBoard();
     this.switchStarter();
   }
@@ -81,10 +88,8 @@ export class TicTacToeComponent implements OnInit {
   setState(state) {
     this.state = state;
   }
-
   takeTurn(x, y) {
     this.difficulty = this.sessionComp.session.difficulty;
-    console.log("turn");
     const move = new Move(x, y, this.board.whoseTurn);
     if (this.board.takeTurn(move)) {
       this.notify.emit({board: this.board, move: move});
@@ -171,8 +176,22 @@ export class TicTacToeComponent implements OnInit {
   getEndMessage() {
     if (this.board.winner) {
       this.gameOverMessage = `Congrats to Player ${this.board.winningPlayer} on winning!`;
+      this.startCountdown();
     } else if (this.board.moveLog.length === 9 && !this.board.winner) {
       this.gameOverMessage = `No one won! Would you like to play again?`;
+      this.startCountdown();
     }
+  }
+
+  startCountdown() {
+    setTimeout(() => {
+      var cd = setInterval(() => {
+        this.countdown--;
+        if (this.countdown === 0) {
+          clearInterval(cd);
+          this.newGame();
+        }
+      }, 1000);
+    }, 500);
   }
 }

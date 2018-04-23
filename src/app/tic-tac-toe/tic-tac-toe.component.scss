@@ -11,9 +11,61 @@
   justify-content: center;
   flex-flow: row wrap;
 
-  * {
+  > * {
     margin: auto 20px;
+  }
+
+  * {
     vertical-align: middle;
+  }
+
+  .btn-pulse {
+    animation: 0.5s 0.5s 10 alternate pulse;
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  @keyframes pulse {
+    from {
+      transform: scale(1);
+    }
+    to {
+      transform: scale(1.1);
+    }
+  }
+
+  .countdown-number {
+    position: relative;
+    left: 24px;
+  }
+
+  svg {
+    position: relative;
+    top: 0;
+    right: 0;
+    width: 32px;
+    height: 32px;
+    transform: rotateY(-180deg) rotateZ(-90deg);
+    margin: 0 !important;
+
+    circle {
+      stroke-dasharray: 113px;
+      stroke-dashoffset: 113px;
+      stroke-linecap: round;
+      stroke-width: 2px;
+      stroke: white;
+      fill: none;
+      animation: countdown 5.5s linear 1 reverse;
+    }
+  }
+  
+  @keyframes countdown {
+    from {
+      stroke-dashoffset: 113px;
+    }
+    to {
+      stroke-dashoffset: 0px;
+    }
   }
 }
 

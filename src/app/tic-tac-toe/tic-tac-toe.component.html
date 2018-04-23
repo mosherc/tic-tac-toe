@@ -3,7 +3,13 @@
     <div class="text-center px-3 w-100">
       <div class="card card-body card-panel game-over mt-3 w-100">
         <div>{{gameOverMessage}}</div>
-        <button class="btn btn-sm btn-primary" (click)="newGame()">New Game?</button>
+        <button class="btn btn-sm btn-primary" [ngClass]="{'btn-pulse': board.winner}" (click)="newGame()">New Game?  
+          <span class="countdown-number">{{countdown}}</span>
+          <svg *ngIf="gameOver">
+            <circle r="15" cx="16" cy="16"></circle>
+          </svg>
+        </button>
+        
       </div>
     </div>
   </div>
