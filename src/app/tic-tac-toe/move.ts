@@ -5,6 +5,4 @@ export class Move {
       public y: number,
       public player: string
   ) {}
-
-
 }

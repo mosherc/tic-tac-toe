@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter, Input, ChangeDetectorRef } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { TicTacToeBoard } from '../tic-tac-toe-board';
+import { TicTacToeBoard } from './tic-tac-toe-board';
 import { SessionComponent } from '../session/session.component';
 import { Move } from './move';
 import { trigger, style, transition, animate, group, state, keyframes } from '@angular/animations';
@@ -28,6 +28,7 @@ import { trigger, style, transition, animate, group, state, keyframes } from '@a
       state('true', style({transform: 'scale(1.1)'})),
       transition('* => *', animate('500ms ease-in-out'))
     ]),
+    /* This animation does not work well, consider removing */
     trigger('played', [
       transition(':enter', [
         style({opacity: 0}),
@@ -54,15 +55,18 @@ export class TicTacToeComponent implements OnInit {
 
   board: TicTacToeBoard = new TicTacToeBoard();
   state = 'moves';
+  // Starter == false means the first player is 'X'
   starter = false;
   heatmap = false;
   average = false;
+  // Oponent == true means AI is playing
   opponent = false;
   gameOverMessage = '';
   thinking = false;
   gameOver = false;
-  difficulty;
+  difficulty: string;
   countdown = 5;
+  cdTimer;
 
   @Output() notify: EventEmitter<any> = new EventEmitter<any>();
   @Input() sessionComp: SessionComponent;
@@ -74,6 +78,7 @@ export class TicTacToeComponent implements OnInit {
   }
 
   newGame() {
+    clearInterval(this.cdTimer);
     this.gameOver = false;
     this.countdown = 5;
     this.board = new TicTacToeBoard();
@@ -81,13 +86,18 @@ export class TicTacToeComponent implements OnInit {
   }
 
   undo() {
-    const move = this.board.undo();
+    this.board.undo();
     this.sessionComp.session.undoStats();
   }
 
+  /* Changes the state of the card panel on the left
+  to given tab */
   setState(state) {
     this.state = state;
   }
+
+  /* Resets difficulty each turn, validates move, notifies
+  parent session, and then performs AI move if required */
   takeTurn(x, y) {
     this.difficulty = this.sessionComp.session.difficulty;
     const move = new Move(x, y, this.board.whoseTurn);
@@ -102,12 +112,13 @@ export class TicTacToeComponent implements OnInit {
     this.gameOver = this.board.winner || this.board.moveLog.length === 9;
   }
 
+  /* Starter can only be switched at beginning of new game */
   switchStarter() {
-    if (!this.board.turnsTaken) {
-      this.board.whoseTurn = this.starter ? 'O' : 'X';
-    }
+    this.board.whoseTurn = !this.board.turnsTaken && this.starter ? 'O' : 'X';
   }
 
+  /* Gets the shade of red based on the frequency relative to
+  the min and max frequency */
   getHeatColor(value, min, max) {
     const cMax = '0000FF';
     const white = 'FFFFFF';
@@ -119,6 +130,8 @@ export class TicTacToeComponent implements OnInit {
     return `rgba(${r},${g},${b}, 0.75)`;
   }
 
+  /* Returns the heat css style attr for each square.
+  Should probably be moved to the session component */
   getHeat(x, y) {
     const sess = this.sessionComp.session;
     const min = sess.minFreq;
@@ -127,8 +140,12 @@ export class TicTacToeComponent implements OnInit {
     if (this.heatmap) {
       return {'background-color': this.getHeatColor(value, min, max) };
     }
-  }
+  } 
 
+  /* Fancy math to calculate where the crosshair for the average
+  position should be located. For example, if the average is 
+  [2, 2], then the crosshair will be located right in the middle
+  of that square instead of at the corner */
   getAvgPos() {
     let xperc = (this.sessionComp.session.avgSpace.x) / .02;
     xperc += (50 - xperc) * .3333;
@@ -165,30 +182,36 @@ export class TicTacToeComponent implements OnInit {
     return this.board.possibleMoves[Math.floor(Math.random() * this.board.possibleMoves.length)];
   }
 
+  // TODO
   getOffensiveMove() {
-    return this.board.possibleMoves[Math.floor(Math.random() * this.board.possibleMoves.length)];
+    return this.getRandomMove();
   }
 
+  // TODO
   getDefensiveMove() {
-    return this.board.possibleMoves[Math.floor(Math.random() * this.board.possibleMoves.length)];
+    return this.getRandomMove();
   }
+
+  // TODO: More difficulties
 
   getEndMessage() {
     if (this.board.winner) {
       this.gameOverMessage = `Congrats to Player ${this.board.winningPlayer} on winning!`;
       this.startCountdown();
-    } else if (this.board.moveLog.length === 9 && !this.board.winner) {
+    } else if (this.board.moveLog.length === 9) {
       this.gameOverMessage = `No one won! Would you like to play again?`;
       this.startCountdown();
     }
   }
 
+  /* Countdown timer for game auto-restart after it ends */
   startCountdown() {
+    // 500ms delay to match Angular/CSS anims
     setTimeout(() => {
-      var cd = setInterval(() => {
+      this.cdTimer = setInterval(() => {
         this.countdown--;
-        if (this.countdown === 0) {
-          clearInterval(cd);
+        if (!this.countdown) {
+          clearInterval(this.cdTimer);
           this.newGame();
         }
       }, 1000);

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { TicTacToeBoard } from '../tic-tac-toe-board';
+import { TicTacToeBoard } from '../tic-tac-toe/tic-tac-toe-board';
 import { Session } from './session';
 import { Move } from '../tic-tac-toe/move';
 
@@ -10,6 +10,7 @@ import { Move } from '../tic-tac-toe/move';
 })
 export class SessionComponent implements OnInit {
 
+  /* Initialize session to existing one in local storage or new one */
   session: Session = Object.assign(new Session(), JSON.parse(localStorage.getItem('session'))) || new Session();
   sessionComp: SessionComponent = this;
 
@@ -17,6 +18,7 @@ export class SessionComponent implements OnInit {
 
   ngOnInit() {}
 
+  /* Saves session to local storage after each move */
   turnTaken(boardMoveObj) {
     this.session.update(boardMoveObj.board, boardMoveObj.move);
     localStorage.setItem('session', JSON.stringify(this.session));

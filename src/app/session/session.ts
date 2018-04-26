@@ -1,4 +1,4 @@
-import { TicTacToeBoard } from "../tic-tac-toe-board";
+import { TicTacToeBoard } from "../tic-tac-toe/tic-tac-toe-board";
 import { Move } from "../tic-tac-toe/move";
 
 export class Session {
@@ -38,6 +38,8 @@ export class Session {
       return this.totalTurns;
   }
 
+  /* Called each time a turn is taken, this updates all the
+  session data based on the existing board and move played */
   update(board: TicTacToeBoard, move: Move) {
     this.board = board;
     this.totalTurns++;
@@ -51,6 +53,7 @@ export class Session {
     }
   }
 
+  /* Undoes all session statistics when a move is undone */
   undoStats() {
     this.totalTurns--;
     if (this.board.turnsTaken < 1) {
@@ -60,14 +63,15 @@ export class Session {
     this.allMoves.pop();
   }
 
+  /* Calculates the average played space over a session */
   averageSpace() {
-    let x = this.allMoves.map(move => move.x).reduce((move, total) => move + total);
-    x /= this.totalTurns;
-    let y = this.allMoves.map(move => move.y).reduce((move, total) => move + total);
-    y /= this.totalTurns;
+    let x = this.allMoves.map(move => move.x).reduce((move, total) => move + total) / this.totalTurns;
+    let y = this.allMoves.map(move => move.y).reduce((move, total) => move + total) / this.totalTurns;
     this.avgSpace = { 'x': x, 'y': y };
   }
 
+  /* Calculates the most popular space (mode), does so by
+  flattening frequency matrix, sorting a copy of it,  */
   mostPopularSpace() {
     const flat = [].concat(...this.moveFreq);
     const flatSort = [...flat].sort((a, b) => a - b);
@@ -76,12 +80,10 @@ export class Session {
     const index = flat.indexOf(flatSort[8]);
   }
 
-  parseFlatIndex(index) {
-    return { x: Math.floor(index / 3), y: index % 3 };
-  }
-
-  // moves per game
-  // streaks
+  /*  Stats TODO:
+      moves per game
+      streaks 
+  */
 
   newGame() {
     this.board = new TicTacToeBoard();

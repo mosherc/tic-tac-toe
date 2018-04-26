@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { TicTacToeBoard } from './tic-tac-toe-board';
 
 @Component({
   selector: 'app-root',
@@ -8,6 +7,4 @@ import { TicTacToeBoard } from './tic-tac-toe-board';
 })
 export class AppComponent {
   title = 'app';
-  
-
 }

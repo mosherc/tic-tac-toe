@@ -3,7 +3,7 @@
     <div class="text-center px-3 w-100">
       <div class="card card-body card-panel game-over mt-3 w-100">
         <div>{{gameOverMessage}}</div>
-        <button class="btn btn-sm btn-primary" [ngClass]="{'btn-pulse': board.winner}" (click)="newGame()">New Game?  
+        <button class="btn btn-sm btn-primary" [ngClass]="{'btn-pulse': board.winner || board.turnsTaken === 9}" (click)="newGame()">New Game?  
           <span class="countdown-number">{{countdown}}</span>
           <svg *ngIf="gameOver">
             <circle r="15" cx="16" cy="16"></circle>
@@ -30,6 +30,7 @@
             </li>
           </ul>
         </div>
+        <!-- Could be *ngSwitchCase -->
         <div *ngIf="state === 'moves'" class="mb-auto w-100 px-3">
           <div class="card move-log">
             <div *ngIf="!board.moveLog.length">No moves yet</div>
