@@ -14,7 +14,7 @@ export class TicTacToeBoard {
     // Initialize possibleMoves for AI for all 9 cells
     for (let x = 0; x < this.cells.length; x++) {
       for (let y = 0; y < this.cells[x].length; y++) {
-        this.possibleMoves.push(new Move(x, y, 'O'));
+        this.possibleMoves.push(new Move(x, y, '-'));
       }
     }
   }
@@ -71,9 +71,8 @@ export class TicTacToeBoard {
     }
   }
 
-  removeAIMove(move: Move) {
-    const removed = new Move(move.x, move.y, 'O');
-    this.possibleMoves = this.possibleMoves.filter(eachMove => JSON.stringify(eachMove) !== JSON.stringify(removed));
+  removeAIMove(removed: Move) {
+    this.possibleMoves = this.possibleMoves.filter(eachMove => eachMove.x != removed.x || eachMove.y != removed.y);
     console.log(this.possibleMoves);
   }
 
