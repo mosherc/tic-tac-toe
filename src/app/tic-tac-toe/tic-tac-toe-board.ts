@@ -85,7 +85,7 @@ export class TicTacToeBoard {
   checks diagonals if applicable */
   checkWinner(x, y) {
     this.winner = this.checkColumn(y) || this.checkRow(x);
-    if ((x + y) % 2 === 0 && !this.winner) {
+    if (!this.winner && (x + y) % 2 === 0) {
       if (x === y) {
         this.winner = this.checkDownDiag();
       } else if (x + y === 2) {

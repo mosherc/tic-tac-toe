@@ -29,16 +29,16 @@ import { trigger, style, transition, animate, group, state, keyframes } from '@a
       transition('* => *', animate('500ms ease-in-out'))
     ]),
     /* This animation does not work well, consider removing */
-    trigger('played', [
-      transition(':enter', [
-        style({opacity: 0}),
-        animate('500ms', style({opacity: 1}))
-      ]),
-      transition(':leave', [
-        style({opacity: 1}),
-        animate('500ms', style({opacity: 0}))
-      ])
-    ]),
+    // trigger('played', [
+    //   transition(':enter', [
+    //     style({opacity: 0}),
+    //     animate('500ms', style({opacity: 1}))
+    //   ]),
+    //   transition(':leave', [
+    //     style({opacity: 1}),
+    //     animate('500ms', style({opacity: 0}))
+    //   ])
+    // ]),
     trigger('moveLog', [
       transition(':enter', [
         style({opacity: 0, height: 0}),
