@@ -74,6 +74,7 @@ export class TicTacToeBoard {
   removeAIMove(move: Move) {
     const removed = new Move(move.x, move.y, 'O');
     this.possibleMoves = this.possibleMoves.filter(eachMove => JSON.stringify(eachMove) !== JSON.stringify(removed));
+    console.log(this.possibleMoves);
   }
 
   switchTurn() {

@@ -146,7 +146,7 @@
         <tbody>
           <tr *ngFor="let column of board.cells; let y = index">
             <td *ngFor="let cell of column; let x = index" (click)="takeTurn(x,y)" class="game-cell" [ngStyle]="getHeat(x, y)">
-              <i *ngIf="board.getCell(x, y)!=='-'" [@played] [ngClass]="{'fas fa-times': board.getCell(x, y)==='X', 'far fa-circle': board.getCell(x, y)==='O'}"></i>
+              <i *ngIf="board.getCell(x, y)!=='-'" [ngClass]="{'fas fa-times': board.getCell(x, y)==='X', 'far fa-circle': board.getCell(x, y)==='O'}"></i>
             </td>
           </tr>
         </tbody>
